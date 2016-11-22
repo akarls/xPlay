@@ -1,0 +1,54 @@
+﻿@model xPlay.ViewModels.ProgramsViewModel
+@{
+    ViewBag.Title = Model.ChannelName;
+}
+<style>
+    .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    background-color: ;
+}
+
+    .navbar-inverse {
+    background-color: #@Model.ChannelColor;
+    border-color: #080808;
+}
+
+    a {
+    color: #@Model.ChannelColor;
+    text-decoration: none;
+    font-size: 30px;
+}
+</style>
+<div class="main">
+
+    <h1 class="page-header">Spelas just nu: @Model.RightNow</h1>
+
+    <audio controls>
+        <source src="@Model.ChannelMp3lUrl" type="audio/mpeg">
+    </audio>
+    <br/>
+    <div class="row placeholders">
+
+    </div>
+
+    <h2 class="sub-header">Program i @Model.ChannelName</h2>
+    <div class="table-responsive">
+        @{
+            var result = Model.RadioPrograms.OrderBy(x => x.Name).GroupBy(x => x.Name[0]);
+
+            foreach (var res in result)
+            {
+                <a href="#@res.Key">@res.Key</a><br/>
+
+                <hr />
+                foreach (var item in res.Where(x => x.Name[0] == res.Key))
+                {
+                    @item.Name<br/>
+                }
+                <br/>
+            }
+        }
+
+
+    </div>
+</div>
+
